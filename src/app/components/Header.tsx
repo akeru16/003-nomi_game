@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -49,37 +49,38 @@ const Header = () => {
           <button
             className={styles.searchTrigger}
             onClick={() => setIsSearchOpen(true)}
-            aria-label="検索画面を開く"
+            aria-label="検索"
           >
-            <span className={styles.searchIcon}>🔍</span>
-            <span className={styles.searchText}>飲みゲーを探す</span>
+            🔍
           </button>
 
-          <SearchModal
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-          />
+          {/* Post Button */}
+          <button className={styles.postBtn} onClick={handlePostClick}>
+            投稿する
+          </button>
 
-          {/* Actions */}
-          <div className={styles.actions}>
-            {user ? (
-              <>
-                <span className={styles.welcomeMsg}>ようこそ、{user.name}さん</span>
-                <Link href="/profile">
-                  <button className={styles.profileBtn}>プロフィール</button>
-                </Link>
-                <button onClick={logout} className={styles.loginBtn}>ログアウト</button>
-              </>
-            ) : (
-              <Link href="/login">
-                <button className={styles.loginBtn}>ログイン</button>
+          {/* User Menu */}
+          {user ? (
+            <div className={styles.userMenu}>
+              <Link href="/profile" className={styles.profileLink}>
+                👤 {user.name}
               </Link>
-            )}
-
-            <button onClick={handlePostClick} className={styles.postBtn}>投稿する</button>
-          </div>
+              <button onClick={logout} className={styles.logoutBtn}>
+                ログアウト
+              </button>
+            </div>
+          ) : (
+            <Link href="/login" className={styles.loginBtn}>
+              ログイン
+            </Link>
+          )}
         </nav>
       </div>
+
+      {/* Search Modal with Suspense */}
+      <Suspense fallback={null}>
+        <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      </Suspense>
     </header>
   );
 };
