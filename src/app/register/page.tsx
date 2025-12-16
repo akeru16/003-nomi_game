@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { translateSupabaseError } from '@/lib/errorTranslation';
 import styles from '../login/page.module.css'; // Reusing Login styles
 
 export default function RegisterPage() {
@@ -22,7 +23,7 @@ export default function RegisterPage() {
             await register(email, name, password);
             router.push('/');
         } catch (err) {
-            setError(err instanceof Error ? err.message : '登録に失敗しました');
+            setError(translateSupabaseError(err));
         }
     };
 
