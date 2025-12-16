@@ -1,0 +1,64 @@
+.stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.icon {
+    font-size: 1.1rem;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+}
+
+.actionBtn:hover {
+    background-color: #f5f5f5;
+}
+
+/* Active States */
+.activeLike {
+    color: var(--color-primary);
+    background-color: #ffe6f2;
+    /* Light Pink */
+}
+
+.activeLike .icon {
+    transform: scale(1.2);
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.activeDislike {
+    color: #555;
+    background-color: #e0e0e0;
+}
+
+.views {
+    cursor: default;
+    border-left: 1px solid #eee;
+    padding-left: 1rem;
+}
+
+.views .icon {
+    color: var(--color-secondary);
+}

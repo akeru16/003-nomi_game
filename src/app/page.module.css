@@ -1,0 +1,300 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  gap: 3rem;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    flex-direction: row;
+    padding: 6rem 2rem;
+    text-align: left;
+    justify-content: center;
+    gap: 4rem;
+  }
+}
+
+.heroContent {
+  max-width: 600px;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .heroTitle {
+    align-items: flex-start;
+  }
+}
+
+.heroLineAccent {
+  color: var(--color-primary);
+  font-size: 3.5rem;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 900px) {
+  .heroSubtitle {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.heroActions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+@media (min-width: 900px) {
+  .heroActions {
+    justify-content: flex-start;
+  }
+}
+
+.actionBtn {
+  border: none;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.actionBtn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.primaryBtn {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 0, 128, 0.3);
+}
+
+.secondaryBtn {
+  background-color: var(--color-secondary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 191, 255, 0.3);
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 500px;
+  /* Reduced from 600px to avoid being 'too big' */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 900px) {
+  .heroImage {
+    margin-bottom: 0;
+    order: 0;
+    /* Keep image on left? Or maybe right? User said logo is 'too big and hides content'. 
+        If side-by-side, it's fine. 
+        Wait, earlier code moved heroImage BEFORE content in text HTML order.
+        If row, image is on LEFT.
+        */
+    justify-content: flex-end;
+  }
+}
+
+.heroIconPlaceholder {
+  font-size: 8rem;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Games Section */
+.gamesSection {
+  padding: 2rem 0;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.sectionTitle::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-accent);
+  margin: 0.5rem auto 0;
+  border-radius: var(--radius-full);
+}
+
+/* Tab Navigation */
+.tabContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+}
+
+.tabItem {
+  font-size: 1.1rem;
+  color: #999;
+  text-decoration: none;
+  padding-bottom: 0.5rem;
+  font-weight: bold;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tabItem:hover {
+  color: #666;
+}
+
+.activeTab {
+  color: var(--color-text);
+}
+
+.activeTab::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  /* overlap border-bottom */
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Game Grid */
+/* Game List (Karaoke Style) */
+.gameList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 800px;
+  margin: 0 auto;
+  /* Center the list */
+}
+
+.gameRow {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+  border: 1px solid #f0f0f0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gameRow:hover {
+  transform: translateX(5px);
+  background-color: #fafafa;
+  border-color: var(--color-primary);
+}
+
+.rowTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-text);
+  flex: 1;
+  /* Take available name space */
+  margin-right: 1rem;
+}
+
+.rankNumber {
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-right: 1rem;
+  min-width: 1.5rem;
+  text-align: center;
+  color: #999;
+}
+
+/* Rank Colors */
+.rank1 {
+  color: #FFD700;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  font-size: 1.4rem;
+}
+
+/* Gold */
+.rank2 {
+  color: #C0C0C0;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  font-size: 1.3rem;
+}
+
+/* Silver */
+.rank3 {
+  color: #CD7F32;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+  font-size: 1.3rem;
+}
+
+/* Bronze */
+
+.rowStats {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
