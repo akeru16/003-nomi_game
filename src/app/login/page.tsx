@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { translateSupabaseError } from '@/lib/errorTranslation';
 import styles from './page.module.css';
 
 export default function LoginPage() {
@@ -21,7 +22,7 @@ export default function LoginPage() {
             await login(email, password);
             router.push('/');
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'ログインに失敗しました');
+            setError(translateSupabaseError(err));
         }
     };
 
