@@ -41,8 +41,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Google Search Console verification (後で追加)
-    // google: 'your-verification-code',
+    google: 'zUpVwU2PDGrCWOedFRDwK5hMBz4FIXUrf2bTh3Eptc4',
   },
 };
 
