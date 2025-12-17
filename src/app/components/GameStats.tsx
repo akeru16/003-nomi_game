@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { setUserAction, getUserAction } from '@/lib/games';
 import styles from './GameStats.module.css';
 
 interface GameStatsProps {
+    gameId: number;
     likes: number;
     dislikes: number;
     views: number;
@@ -18,26 +20,46 @@ const formatNumber = (num: number) => {
     return num.toString();
 };
 
-const GameStats = ({ likes: initialLikes, dislikes: initialDislikes, views }: GameStatsProps) => {
-    const { user } = useAuth();
+const GameStats = ({ gameId, likes: initialLikes, dislikes: initialDislikes, views }: GameStatsProps) => {
+    const { user, anonymousId } = useAuth();
     const router = useRouter();
 
     const [likes, setLikes] = useState(initialLikes);
     const [dislikes, setDislikes] = useState(initialDislikes);
-    const [userAction, setUserAction] = useState<'like' | 'dislike' | null>(null);
+    const [userAction, setUserActionState] = useState<'like' | 'dislike' | null>(null);
 
-    const handleAction = (type: 'like' | 'dislike') => {
-        if (!user) {
-            if (confirm("ログインが必要です。ログインページに移動しますか？")) {
-                router.push('/login');
+    // Load initial user action
+    useEffect(() => {
+        const loadAction = async () => {
+            const userId = user?.id || anonymousId;
+            if (userId && gameId) {
+                const action = await getUserAction(userId, gameId);
+                // @ts-ignore
+                if (action === 'like' || action === 'dislike') {
+                    // @ts-ignore
+                    setUserActionState(action);
+                }
             }
+        };
+        loadAction();
+    }, [user, anonymousId, gameId]);
+
+    const handleAction = async (type: 'like' | 'dislike') => {
+        const userId = user?.id || anonymousId;
+
+        if (!userId) {
+            // Should not happen if anonymousId is working
             return;
         }
 
-        // Optimistic update
+        // Optimistic update logic
+        const prevAction = userAction;
+        const prevLikes = likes;
+        const prevDislikes = dislikes;
+
         if (userAction === type) {
             // Toggle off
-            setUserAction(null);
+            setUserActionState(null);
             if (type === 'like') setLikes(prev => prev - 1);
             else setDislikes(prev => prev - 1);
         } else {
@@ -53,7 +75,25 @@ const GameStats = ({ likes: initialLikes, dislikes: initialDislikes, views }: Ga
                 if (type === 'like') setLikes(prev => prev + 1);
                 else setDislikes(prev => prev + 1);
             }
-            setUserAction(type);
+            setUserActionState(type);
+        }
+
+        // Call API
+        try {
+            await setUserAction(userId, gameId, type);
+        } catch (error: any) {
+            console.error('Failed to update vote:', error);
+
+            // Revert on error
+            setUserActionState(prevAction);
+            setLikes(prevLikes);
+            setDislikes(prevDislikes);
+
+            if (error.message === 'LIKE_LIMIT_REACHED') {
+                alert("いいねの上限(100件)に達しました。\n新しいゲームをいいねするには、他のゲームのいいねを解除してください。");
+            } else {
+                alert("エラーが発生しました。もう一度お試しください。");
+            }
         }
     };
 

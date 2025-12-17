@@ -82,7 +82,14 @@ export default function PostPage() {
         }
 
         try {
-            const { createGame } = await import('@/lib/games');
+            const { createGame, getUserGameCount } = await import('@/lib/games');
+
+            // Check post limit
+            const postCount = await getUserGameCount(user.id);
+            if (postCount >= 100) {
+                alert("投稿数の上限(100件)に達しました。\n新しいゲームを投稿するには、プロフィールから古いゲームを削除してください。");
+                return;
+            }
 
             const newGame = await createGame({
                 title,

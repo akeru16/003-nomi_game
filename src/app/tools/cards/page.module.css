@@ -5,11 +5,374 @@
     min-height: calc(100vh - 160px);
     padding: 1rem;
     text-align: center;
-    position: relative;
-    /* Enable absolute positioning context */
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* ... existing styles ... */
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modeSelector {
+    display: flex;
+    background: #f0f0f0;
+    padding: 4px;
+    border-radius: var(--radius-full);
+    gap: 4px;
+}
+
+.modeBtn {
+    border: none;
+    background: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.activeMode {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resetBtn {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.resetBtn:hover {
+    background: #e0e0e0;
+}
+
+.status {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.count {
+    color: var(--color-text);
+}
+
+.streak {
+    color: var(--color-secondary);
+}
+
+.kingsStatus {
+    color: #d32f2f;
+}
+
+/* Card Area */
+.cardArea {
+    width: 100%;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    margin-bottom: 1.5rem;
+}
+
+.card {
+    width: 240px;
+    height: 340px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 1.5rem;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.cardTopSuit {
+    font-size: 4rem;
+    line-height: 1;
+    align-self: flex-start;
+}
+
+.cardCenterNumber {
+    font-size: 7rem;
+    font-weight: 900;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cardBack {
+    width: 240px;
+    height: 340px;
+    background: #2c3e50;
+    border-radius: 20px;
+    border: 8px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.pattern {
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: repeating-linear-gradient(45deg, #000 0, #000 10px, transparent 10px, transparent 20px);
+}
+
+.tapText {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.drawing {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8) translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Result Overlay */
+.resultOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 900;
+    animation: fadeIn 0.1s ease;
+}
+
+.win {
+    color: #4caf50;
+}
+
+.lose {
+    color: #f44336;
+}
+
+.draw {
+    color: #ffeb3b;
+}
+
+/* Game UI */
+.gameUI {
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Rule Box */
+.ruleBox {
+    background: #fff;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.ruleTitle {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ruleText {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-text);
+    margin: 0;
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+/* High Low Controls */
+.highLowControls {
+    width: 100%;
+    text-align: center;
+}
+
+.instruction {
+    margin: 0 0 1rem 0;
+    font-weight: bold;
+    color: #666;
+}
+
+.hlButtons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.highBtn,
+.lowBtn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.highBtn {
+    background: linear-gradient(to bottom, #42a5f5, #2196f3);
+}
+
+.lowBtn {
+    background: linear-gradient(to bottom, #ef5350, #f44336);
+}
+
+.highBtn:active,
+.lowBtn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.highBtn:disabled,
+.lowBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* History */
+.historyBtn {
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    color: #888;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modalContent {
+    background: white;
+    width: 90%;
+    max-height: 80vh;
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.historyGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0.5rem;
+}
+
+.historyCard {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    background: #fafafa;
+}
+
+.emptyState {
+    text-align: center;
+}
+
+.mainResetBtn {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-full);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: var(--shadow-pop);
+}
 
 .header {
     width: 100%;

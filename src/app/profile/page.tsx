@@ -9,7 +9,7 @@ import type { Game } from '../../lib/games';
 import styles from './page.module.css';
 
 export default function ProfilePage() {
-    const { user, favorites, loading, updateUsername } = useAuth();
+    const { user, favorites, loading, updateUsername, signOut } = useAuth();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<'favorites' | 'posts'>('favorites');
     const [isEditingName, setIsEditingName] = useState(false);
@@ -82,12 +82,18 @@ export default function ProfilePage() {
                 ) : (
                     <>
                         <h1 className={styles.title}>
-                            {user?.name} のプロフィール
+                            {user?.name}
                             <button onClick={handleStartEdit} className={styles.editIconBtn} title="ユーザー名を編集">
                                 ✏️
                             </button>
                         </h1>
                         <p className={styles.email}>{user?.email}</p>
+
+                        <div className={styles.actions}>
+                            <button onClick={() => signOut()} className={styles.logoutBtn}>
+                                ログアウト
+                            </button>
+                        </div>
                     </>
                 )}
             </div>
