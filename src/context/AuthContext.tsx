@@ -13,22 +13,46 @@ export interface User {
 interface AuthContextType {
     user: User | null;
     loading: boolean;
-    favorites: string[]; // Array of game IDs
+    favorites: string[];
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, name: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
+    signOut: () => Promise<void>;
     updateUsername: (newName: string) => Promise<void>;
+    isFavorite: (gameId: string) => boolean;
     addFavorite: (gameId: string) => Promise<void>;
     removeFavorite: (gameId: string) => Promise<void>;
-    isFavorite: (gameId: string) => boolean;
+    anonymousId: string;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    loading: true,
+    favorites: [],
+    login: async () => { },
+    register: async () => { },
+    signOut: async () => { },
+    updateUsername: async () => { },
+    isFavorite: () => false,
+    addFavorite: async () => { },
+    removeFavorite: async () => { },
+    anonymousId: '',
+});
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [favorites, setFavorites] = useState<string[]>([]);
+    const [anonymousId, setAnonymousId] = useState('');
+
+    useEffect(() => {
+        // Initialize anonymous ID
+        let anonId = localStorage.getItem('anonymous_session_id');
+        if (!anonId) {
+            anonId = crypto.randomUUID();
+            localStorage.setItem('anonymous_session_id', anonId);
+        }
+        setAnonymousId(anonId);
+    }, []);
 
     // Initialize session and load user data
     useEffect(() => {
@@ -121,7 +145,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const logout = async () => {
+    const signOut = async () => {
         await supabase.auth.signOut();
         setUser(null);
         setFavorites([]);
@@ -184,11 +208,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             favorites,
             login,
             register,
-            logout,
+            signOut,
             updateUsername,
             addFavorite,
             removeFavorite,
-            isFavorite
+            isFavorite,
+            anonymousId
         }}>
             {children}
         </AuthContext.Provider>

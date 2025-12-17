@@ -92,7 +92,7 @@ export async function createGame(game: {
             rules: game.rules,
             materials: game.materials || [],
             tags: game.tags,
-            posted_by: game.userName,
+            posted_by: game.userId,
             likes: 0,
             dislikes: 0,
             views: 0,
@@ -152,6 +152,14 @@ export async function setUserAction(userId: string, gameId: number, action: 'lik
 
         return null;
     } else {
+        // Check like limit if adding a new like
+        if (action === 'like') {
+            const likeCount = await getUserLikeCount(userId);
+            if (likeCount >= 100) {
+                throw new Error('LIKE_LIMIT_REACHED');
+            }
+        }
+
         // Upsert action
         await supabase
             .from('user_actions')
@@ -178,4 +186,35 @@ export async function setUserAction(userId: string, gameId: number, action: 'lik
 
         return action;
     }
+}
+
+// Get total number of likes by a user
+export async function getUserLikeCount(userId: string): Promise<number> {
+    const { count, error } = await supabase
+        .from('user_actions')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .eq('action', 'like');
+
+    if (error) {
+        console.error('Error counting user likes:', error);
+        return 0;
+    }
+
+    return count || 0;
+}
+
+// Get total number of games posted by a user
+export async function getUserGameCount(userId: string): Promise<number> {
+    const { count, error } = await supabase
+        .from('games')
+        .select('*', { count: 'exact', head: true })
+        .eq('posted_by', userId);
+
+    if (error) {
+        console.error('Error counting user games:', error);
+        return 0;
+    }
+
+    return count || 0;
 }

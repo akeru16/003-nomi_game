@@ -78,7 +78,7 @@ export default function GameDetailPage() {
                 </div>
 
                 <div className={styles.statsRow}>
-                    <GameStats likes={game.likes} dislikes={game.dislikes} views={game.views} />
+                    <GameStats gameId={game.id} likes={game.likes} dislikes={game.dislikes} views={game.views} />
                     <div className={styles.metaInfo}>
                         <div className={styles.date}>{new Date(game.created_at).toLocaleDateString('ja-JP')} 投稿</div>
                         {game.posted_by && (

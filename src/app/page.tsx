@@ -50,6 +50,26 @@ export default async function Home({ searchParams }: HomeProps) {
     return `/?${params.toString()}`;
   };
 
+  // Helper to toggle a tag
+  const buildTagUrl = (tag: string) => {
+    const params = new URLSearchParams();
+    if (q) params.set('q', q);
+    if (sort) params.set('sort', sort);
+
+    let newTags = [...selectedTags];
+    if (newTags.includes(tag)) {
+      newTags = newTags.filter(t => t !== tag);
+    } else {
+      newTags.push(tag);
+    }
+
+    if (newTags.length > 0) {
+      params.set('tags', newTags.join(','));
+    }
+
+    return `/?${params.toString()}`;
+  };
+
   // Helper for Show More URL
   const buildShowMoreUrl = () => {
     const params = new URLSearchParams();
@@ -70,18 +90,21 @@ export default async function Home({ searchParams }: HomeProps) {
           <Link
             href={buildSortUrl('popular')}
             className={`${styles.tabItem} ${sort === 'popular' ? styles.activeTab : ''}`}
+            scroll={false}
           >
             人気
           </Link>
           <Link
             href={buildSortUrl('trending')}
             className={`${styles.tabItem} ${sort === 'trending' ? styles.activeTab : ''}`}
+            scroll={false}
           >
             急上昇
           </Link>
           <Link
             href={buildSortUrl('new')}
             className={`${styles.tabItem} ${sort === 'new' ? styles.activeTab : ''}`}
+            scroll={false}
           >
             最新
           </Link>
@@ -93,7 +116,24 @@ export default async function Home({ searchParams }: HomeProps) {
             : sort === 'trending' ? '今話題ののみげーむ' : sort === 'new' ? '新着のみげーむ' : '人気ののみげーむ'}
         </h2>
 
-        {/* Tag Filter Bar REMOVED as requested */}
+        {/* Tag Filter Bar - Only show when searching or filtering */}
+        {(searchQuery || selectedTags.length > 0) && (
+          <div className={styles.tagFilterBar}>
+            {GAME_TAGS.map(tag => {
+              const isSelected = selectedTags.includes(tag);
+              return (
+                <Link
+                  key={tag}
+                  href={buildTagUrl(tag)}
+                  className={`${styles.tagChip} ${isSelected ? styles.activeTag : ''}`}
+                  scroll={false}
+                >
+                  {tag} {isSelected && '✕'}
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
         <div className={styles.gameList}>
           {displayedGames.length > 0 ? (
@@ -124,9 +164,14 @@ export default async function Home({ searchParams }: HomeProps) {
               );
             })
           ) : (
-            <p style={{ textAlign: 'center', width: '100%', padding: '2rem', color: '#888' }}>
-              見つかりませんでした... 😢
-            </p>
+            <div className={styles.emptyState}>
+              <p>見つかりませんでした... 😢</p>
+              {selectedTags.length > 0 && (
+                <Link href={`/?q=${q || ''}`} className={styles.clearTagsBtn} scroll={false}>
+                  タグをクリア
+                </Link>
+              )}
+            </div>
           )}
 
           {/* Show More Button */}

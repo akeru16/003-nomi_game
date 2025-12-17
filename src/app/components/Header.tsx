@@ -9,9 +9,10 @@ import styles from './Header.module.css';
 import SearchModal from './SearchModal';
 
 const Header = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
 
   const handlePostClick = () => {
     if (!user) {
@@ -38,11 +39,37 @@ const Header = () => {
 
         <nav className={styles.nav}>
           {/* Quick Tools */}
-          <div className={styles.toolLinks}>
-            <Link href="/tools/dice" className={styles.toolLink} title="サイコロ">🎲</Link>
-            <Link href="/tools/cards" className={styles.toolLink} title="トランプ">🃏</Link>
-            <Link href="/tools/kings" className={styles.toolLink} title="王様ゲーム">👑</Link>
-            <Link href="/random" className={styles.toolLink} title="ランダム">🔀</Link>
+          {/* Tools Menu */}
+          <div className={styles.toolsMenuContainer}>
+            <button
+              className={styles.toolsMenuBtn}
+              onClick={() => setToolsOpen(!toolsOpen)}
+            >
+              🛠️ ツール ▼
+            </button>
+
+            {toolsOpen && (
+              <>
+                <div className={styles.toolsDropdownOverlay} onClick={() => setToolsOpen(false)} />
+                <div className={styles.toolsDropdown}>
+                  <Link href="/tools/dice" className={styles.toolItem} onClick={() => setToolsOpen(false)}>
+                    <span className={styles.toolIcon}>🎲</span> サイコロ
+                  </Link>
+                  <Link href="/tools/cards" className={styles.toolItem} onClick={() => setToolsOpen(false)}>
+                    <span className={styles.toolIcon}>🃏</span> トランプ
+                  </Link>
+                  <Link href="/tools/kings" className={styles.toolItem} onClick={() => setToolsOpen(false)}>
+                    <span className={styles.toolIcon}>👑</span> 王様ゲーム
+                  </Link>
+                  <Link href="/tools/metronome" className={styles.toolItem} onClick={() => setToolsOpen(false)}>
+                    <span className={styles.toolIcon}>⏱️</span> メトロノーム
+                  </Link>
+                  <Link href="/random" className={styles.toolItem} onClick={() => setToolsOpen(false)}>
+                    <span className={styles.toolIcon}>🔀</span> ランダム
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Search Trigger */}
@@ -62,12 +89,11 @@ const Header = () => {
           {/* User Menu */}
           {user ? (
             <div className={styles.userMenu}>
-              <Link href="/profile" className={styles.profileLink}>
-                👤 {user.name}
+              <Link href="/profile" className={styles.profileLink} title="プロフィール">
+                <span className={styles.userIcon}>👤</span>
+                {/* Mobile: hide name, Desktop: show name will be handled in CSS if needed, or just show name */}
+                <span className={styles.userName}>{user.name}</span>
               </Link>
-              <button onClick={logout} className={styles.logoutBtn}>
-                ログアウト
-              </button>
             </div>
           ) : (
             <Link href="/login" className={styles.loginBtn}>
