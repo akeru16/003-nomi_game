@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const runtime = 'edge';
+
 import styles from './page.module.css';
 import { GAME_TAGS } from '../data/games';
 import { getGames } from '../lib/games';
