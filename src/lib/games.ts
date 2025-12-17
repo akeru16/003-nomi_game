@@ -123,6 +123,49 @@ export async function createGame(game: {
     return data;
 }
 
+// Update an existing game
+export async function updateGame(id: number, game: {
+    title?: string;
+    description?: string;
+    rules?: string[];
+    materials?: string[];
+    tags?: string[];
+}) {
+    const { data, error } = await supabase
+        .from('games')
+        .update({
+            title: game.title,
+            description: game.description,
+            rules: game.rules,
+            materials: game.materials || [],
+            tags: game.tags,
+        })
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Error updating game:', error);
+        throw error;
+    }
+
+    return data;
+}
+
+// Delete a game
+export async function deleteGame(id: number, userId: string) {
+    const { error } = await supabase
+        .from('games')
+        .delete()
+        .eq('id', id)
+        .eq('posted_by', userId); // Ensure ownership
+
+    if (error) {
+        console.error('Error deleting game:', error);
+        throw error;
+    }
+}
+
 // Update game views
 export async function incrementViews(gameId: number) {
     const { error } = await supabase.rpc('increment_views', { game_id: gameId });
