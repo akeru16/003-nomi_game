@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://nomi-game.vercel.app'
+    const baseUrl = 'https://nomi-game.com' // Custom domain
 
     // Static pages
     const routes = ['', '/login', '/register', '/post', '/random', '/profile'].map((route) => ({
