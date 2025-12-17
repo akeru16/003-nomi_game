@@ -82,7 +82,7 @@ export default function GameDetailPage() {
                     <div className={styles.metaInfo}>
                         <div className={styles.date}>{new Date(game.created_at).toLocaleDateString('ja-JP')} 投稿</div>
                         {game.posted_by && (
-                            <div className={styles.author}>👤 投稿者: {game.posted_by}</div>
+                            <div className={styles.author}>👤 投稿者: {game.author_name || '名無しさん'}</div>
                         )}
                     </div>
                 </div>

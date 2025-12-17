@@ -13,6 +13,7 @@ export interface Game {
     weekly_likes: number;
     tags: string[];
     posted_by?: string;
+    author_name?: string;
     created_at: string;
 }
 
@@ -69,6 +70,19 @@ export async function getGameById(id: number) {
     if (error) {
         console.error('Error fetching game:', error);
         return null;
+    }
+
+    // Fetch author name if posted_by exists
+    if (data.posted_by) {
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('name')
+            .eq('id', data.posted_by)
+            .single();
+
+        if (profile) {
+            (data as Game).author_name = profile.name;
+        }
     }
 
     return data;

@@ -38,7 +38,7 @@ export default function ProfilePage() {
     }
 
     const favoriteGames = allGames.filter(game => favorites.includes(game.id.toString()));
-    const myPosts = allGames.filter(game => game.posted_by && game.posted_by === user?.name);
+    const myPosts = allGames.filter(game => game.posted_by && game.posted_by === user?.id);
 
     const handleStartEdit = () => {
         setNewUsername(user?.name || '');
