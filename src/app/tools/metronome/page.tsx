@@ -8,6 +8,12 @@ export default function MetronomePage() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [beat, setBeat] = useState(0); // For visual animation
 
+    // Refs for mutable state in audio loop
+    const bpmRef = useRef(bpm);
+    useEffect(() => {
+        bpmRef.current = bpm;
+    }, [bpm]);
+
     // Audio Context
     const audioContextRef = useRef<AudioContext | null>(null);
     const nextNoteTimeRef = useRef(0);
@@ -41,9 +47,9 @@ export default function MetronomePage() {
     };
 
     const nextNote = useCallback(() => {
-        const secondsPerBeat = 60.0 / bpm;
+        const secondsPerBeat = 60.0 / bpmRef.current;
         nextNoteTimeRef.current += secondsPerBeat;
-    }, [bpm]);
+    }, []); // No dependency on bpm directly
 
     const scheduler = useCallback(() => {
         if (!audioContextRef.current) return;
@@ -72,8 +78,8 @@ export default function MetronomePage() {
 
     const togglePlay = () => {
         if (isPlaying) {
-            clearTimeout(timerIDRef.current!);
-            cancelAnimationFrame(animationFrameRef.current!);
+            if (timerIDRef.current) clearTimeout(timerIDRef.current);
+            if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
             setIsPlaying(false);
         } else {
             if (!audioContextRef.current) {
