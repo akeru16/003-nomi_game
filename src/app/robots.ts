@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: ['/api/', '/profile'],
         },
-        sitemap: 'https://nomi-game.com/sitemap.xml',
+        sitemap: 'https://nomi-game.work/sitemap.xml',
     }
 }
