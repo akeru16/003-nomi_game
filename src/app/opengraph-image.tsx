@@ -15,6 +15,11 @@ export default async function Image() {
         (res) => res.arrayBuffer()
     )
 
+    // Convert to base64
+    const buffer = Buffer.from(logoData);
+    const base64 = buffer.toString('base64');
+    const dataUrl = `data:image/png;base64,${base64}`;
+
     return new ImageResponse(
         (
             <div
@@ -28,7 +33,7 @@ export default async function Image() {
                 }}
             >
                 <img
-                    src={logoData as any}
+                    src={dataUrl}
                     width="800"
                     style={{
                         objectFit: 'contain'
