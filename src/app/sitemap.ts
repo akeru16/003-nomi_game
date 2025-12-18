@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { getGamesServer } from '../lib/games-server'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://nomi-game.com' // Custom domain
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const baseUrl = 'https://nomi-game.work'
 
     // Static pages
     const routes = ['', '/login', '/register', '/post', '/random', '/profile'].map((route) => ({
@@ -19,11 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
     }))
 
-    // Game pages (動的に生成 - 今は静的に11ゲーム分)
-    const gameIds = Array.from({ length: 11 }, (_, i) => i + 1)
-    const games = gameIds.map((id) => ({
-        url: `${baseUrl}/games/${id}`,
-        lastModified: new Date().toISOString(),
+    // Game pages (Dynamic)
+    // Fetch all games (limit 1000 for safety, though sitemaps can handle more)
+    const allGames = await getGamesServer({ limit: 1000 })
+    const games = allGames.map((game) => ({
+        url: `${baseUrl}/games/${game.id}`,
+        lastModified: new Date(game.created_at).toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.9,
     }))
