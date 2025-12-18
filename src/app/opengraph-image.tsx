@@ -15,9 +15,11 @@ export default async function Image() {
         (res) => res.arrayBuffer()
     )
 
-    // Convert to base64
-    const buffer = Buffer.from(logoData);
-    const base64 = buffer.toString('base64');
+    // Convert to base64 using Web APIs (Edge compatible)
+    const base64 = btoa(
+        new Uint8Array(logoData)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
     const dataUrl = `data:image/png;base64,${base64}`;
 
     return new ImageResponse(
