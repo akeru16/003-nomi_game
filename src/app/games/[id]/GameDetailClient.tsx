@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Game } from '@/lib/games';
 import GameStats from '@/app/components/GameStats';
+import ShareButtons from '@/app/components/ShareButtons';
 import AdSense from '@/app/components/AdSense';
 import { useAuth } from '@/context/AuthContext';
 import styles from './page.module.css';
@@ -48,6 +49,10 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                     >
                         {favorited ? '❤️' : '🤍'}
                     </button>
+                </div>
+
+                <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'flex-start' }}>
+                    <ShareButtons title={game.title} />
                 </div>
 
                 <div className={styles.statsRow}>
