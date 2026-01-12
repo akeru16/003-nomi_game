@@ -5,7 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://nomi-game.work'
 
     // Static pages
-    const routes = ['', '/login', '/register', '/post', '/random', '/profile'].map((route) => ({
+    const routes = ['', '/login', '/register', '/post', '/random', '/profile', '/privacy', '/terms', '/contact', '/about'].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date().toISOString(),
         changeFrequency: 'daily' as const,

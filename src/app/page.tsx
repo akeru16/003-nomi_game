@@ -184,6 +184,17 @@ export default async function Home({ searchParams }: HomeProps) {
           )}
         </div>
       </section>
-    </div>
+
+      {/* About Section for SEO and AdSense Content Value */}
+      <section className={styles.aboutSection} style={{ marginTop: '4rem', padding: '2rem', background: '#f8f9fa', borderRadius: '12px' }}>
+        <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>のみげーむとは？</h2>
+        <p style={{ lineHeight: '1.8', color: '#444' }}>
+          「のみげーむ」は、飲み会やパーティー、合コンで盛り上がるゲームを厳選して紹介するプラットフォームです。<br />
+          王様ゲームや山手線ゲームなどの定番から、知る人ぞ知るローカルな遊びまで、幅広い「飲みゲー」を網羅しています。<br />
+          ルールが思い出せない時や、新しい遊びを探したい時に、ぜひご活用ください。<br />
+          また、ユーザー登録をすることで、あなたのおすすめゲームを投稿したり、お気に入りのゲームを保存したりすることができます。
+        </p>
+      </section>
+    </div >
   );
 }
