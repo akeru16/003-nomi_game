@@ -61,11 +61,18 @@ export default async function GameDetailPage({ params }: PageProps) {
     };
 
     if (totalRatings > 0) {
-        jsonLd.aggregateRating = {
-            '@type': 'AggregateRating',
-            ratingValue: game.likes > 0 ? '5' : '1',
-            ratingCount: totalRatings.toString()
-        };
+        // Calculate score from 1.0 to 5.0 based on like ratio
+        // 100% likes = 5.0, 0% likes = 1.0
+        const score = 1 + (4 * (game.likes / totalRatings));
+
+        // Only show rating if it's 3.0+ OR if it has 100+ views (popular games show rating regardless)
+        if (score >= 3.0 || game.views >= 100) {
+            jsonLd.aggregateRating = {
+                '@type': 'AggregateRating',
+                ratingValue: score.toFixed(1),
+                ratingCount: totalRatings.toString()
+            };
+        }
     }
 
     return (

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { Game } from '@/lib/games';
+import { Game, incrementViews } from '@/lib/games';
 import GameStats from '@/app/components/GameStats';
 import ShareButtons from '@/app/components/ShareButtons';
 import AdSense from '@/app/components/AdSense';
@@ -18,6 +18,9 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
     const [favorited, setFavorited] = useState(false);
 
     useEffect(() => {
+        // Increment view count
+        incrementViews(game.id);
+
         // Initialize favorite state on mount
         setFavorited(isFavorite(game.id.toString()));
     }, [isFavorite, game.id]);
