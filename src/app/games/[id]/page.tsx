@@ -39,8 +39,10 @@ export default async function GameDetailPage({ params }: PageProps) {
         notFound();
     }
 
+    const totalRatings = game.likes + game.dislikes;
+
     // JSON-LD for SoftwareApplication / Game
-    const jsonLd = {
+    const jsonLd: any = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
         name: game.title,
@@ -55,13 +57,16 @@ export default async function GameDetailPage({ params }: PageProps) {
         author: {
             '@type': 'Person',
             name: game.author_name || 'Unknown'
-        },
-        aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: game.likes > 0 ? '5' : '0', // Simplified rating logic based on likes
-            ratingCount: Math.max(game.likes + game.dislikes, 1).toString()
         }
     };
+
+    if (totalRatings > 0) {
+        jsonLd.aggregateRating = {
+            '@type': 'AggregateRating',
+            ratingValue: game.likes > 0 ? '5' : '1',
+            ratingCount: totalRatings.toString()
+        };
+    }
 
     return (
         <>
