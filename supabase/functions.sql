@@ -7,7 +7,7 @@ RETURNS void AS $$
 BEGIN
   UPDATE games SET views = views + 1 WHERE id = game_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Increment likes
 CREATE OR REPLACE FUNCTION increment_likes(game_id INTEGER)
@@ -15,7 +15,7 @@ RETURNS void AS $$
 BEGIN
   UPDATE games SET likes = likes + 1 WHERE id = game_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Decrement likes
 CREATE OR REPLACE FUNCTION decrement_likes(game_id INTEGER)
@@ -23,7 +23,7 @@ RETURNS void AS $$
 BEGIN
   UPDATE games SET likes = GREATEST(0, likes - 1) WHERE id = game_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Increment dislikes
 CREATE OR REPLACE FUNCTION increment_dislikes(game_id INTEGER)
@@ -31,7 +31,7 @@ RETURNS void AS $$
 BEGIN
   UPDATE games SET dislikes = dislikes + 1 WHERE id = game_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Decrement dislikes
 CREATE OR REPLACE FUNCTION decrement_dislikes(game_id INTEGER)
@@ -39,4 +39,4 @@ RETURNS void AS $$
 BEGIN
   UPDATE games SET dislikes = GREATEST(0, dislikes - 1) WHERE id = game_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
