@@ -60,15 +60,15 @@ const GameStats = ({ gameId, likes: initialLikes, dislikes: initialDislikes, vie
         if (userAction === type) {
             // Toggle off
             setUserActionState(null);
-            if (type === 'like') setLikes(prev => prev - 1);
-            else setDislikes(prev => prev - 1);
+            if (type === 'like') setLikes(prev => Math.max(0, prev - 1));
+            else setDislikes(prev => Math.max(0, prev - 1));
         } else {
             // Toggle on (and potentially switch)
             if (userAction === 'like' && type === 'dislike') {
-                setLikes(prev => prev - 1);
+                setLikes(prev => Math.max(0, prev - 1));
                 setDislikes(prev => prev + 1);
             } else if (userAction === 'dislike' && type === 'like') {
-                setDislikes(prev => prev - 1);
+                setDislikes(prev => Math.max(0, prev - 1));
                 setLikes(prev => prev + 1);
             } else {
                 // Fresh toggle
