@@ -5,7 +5,14 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/api/', '/profile'],
+            disallow: [
+                '/api/',
+                '/profile',
+                '/login',
+                '/register',
+                '/post',
+                '/search'
+            ],
         },
         sitemap: 'https://nomi-game.work/sitemap.xml',
     }

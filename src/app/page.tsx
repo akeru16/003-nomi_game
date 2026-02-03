@@ -186,13 +186,45 @@ export default async function Home({ searchParams }: HomeProps) {
       </section>
 
       {/* About Section for SEO and AdSense Content Value */}
-      <section className={styles.aboutSection} style={{ marginTop: '4rem', padding: '2rem', background: '#f8f9fa', borderRadius: '12px' }}>
-        <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>のみげーむとは？</h2>
-        <p style={{ lineHeight: '1.8', color: '#444' }}>
-          「のみげーむ」は、飲み会やパーティー、合コンで盛り上がるゲームを厳選して紹介するプラットフォームです。<br />
-          王様ゲームや山手線ゲームなどの定番から、知る人ぞ知るローカルな遊びまで、幅広い「飲みゲー」を網羅しています。<br />
-          ルールが思い出せない時や、新しい遊びを探したい時に、ぜひご活用ください。<br />
-          また、ユーザー登録をすることで、あなたのおすすめゲームを投稿したり、お気に入りのゲームを保存したりすることができます。
+
+
+      {/* Enhanced SEO Content Section */}
+      <section className={styles.seoSection} style={{ marginTop: '2rem', padding: '2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
+          幹事さん必見！盛り上がる飲み会ゲームの決定版
+        </h3>
+        <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '1.5rem' }}>
+          飲み会や合コン、パーティーで「次は何して遊ぼう？」と困ったことはありませんか？
+          のみげーむなら、人数やシチュエーションに合わせた最適なゲームが必ず見つかります。
+          少人数でじっくり楽しめる心理戦から、大人数でワイワイ盛り上がるアクションゲームまで、
+          独自のタグ検索で簡単に見つけることができます。
+        </p>
+
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
+          みんなで作り上げる飲みゲームの輪
+        </h3>
+        <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '1.5rem' }}>
+          「のみげーむ」は、みんなで作るプラットフォームです。<br />
+          あなたの地元だけで流行っているローカルなゲームや、サークルで盛り上がったオリジナルの遊び方を、ぜひ投稿してください。<br />
+          あなたの投稿したゲームが、日本中の飲み会で遊ばれるようになるかもしれません。<br />
+          自分のお気に入りの「ノミゲー」を流行らせて、全国の飲み会をさらに熱くしましょう！
+        </p>
+
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
+          掲載ゲームの種類
+        </h3>
+        <ul style={{ lineHeight: '1.8', color: '#555', paddingLeft: '1.5rem', marginBottom: '1.5rem' }}>
+          <li><strong>定番系</strong>：山手線ゲーム、たけのこニョッキ、第一印象ゲームなど、誰でもすぐに楽しめる安心のゲーム</li>
+          <li><strong>リズム系</strong>：ピンポンパンゲーム、ほうれん草ゲーム、炙りカルビゲームなど、テンポよく進む爽快なゲーム</li>
+          <li><strong>心理戦系</strong>：マイノリティゲームなど、会話や駆け引きで相手を出し抜く知的ゲーム</li>
+          <li><strong>ユニーク系</strong>：モッツァレラチーズゲーム、マンションゲームなど、個性的で盛り上がること間違いなしのゲーム</li>
+          <li><strong>便利なWebツール</strong>：王様ゲームやトランプ機能（キングスカップ、ハイアンドローなどに最適）など、アプリ不要でブラウザですぐに使えるツールも充実！画面上部の「ツール」メニューから選んで遊べます。</li>
+        </ul>
+
+        <p style={{ fontSize: '0.9rem', color: '#888', marginTop: '2rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
+          ※当サイトは、楽しいお酒の場をサポートするための情報サイトです。
+          未成年の飲酒、一気飲みなどの危険な行為、強要行為は絶対に行わないでください。
+          ルールとマナーを守って、楽しく遊びましょう。
         </p>
       </section>
     </div >
