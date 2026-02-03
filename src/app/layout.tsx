@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import GoogleAdSense from "./components/GoogleAdSense";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nomi-game.work'),
@@ -79,14 +80,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <meta name="google-adsense-account" content="ca-pub-3972183234429369" />
-        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
+
+        <GoogleAdSense />
       </head>
       <body>
         <AuthProvider>
