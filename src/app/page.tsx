@@ -191,23 +191,23 @@ export default async function Home({ searchParams }: HomeProps) {
       {/* Enhanced SEO Content Section */}
       <section className={styles.seoSection} style={{ marginTop: '2rem', padding: '2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
         <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
-          幹事さん必見！盛り上がる飲み会ゲームの決定版
+          幹事さん必見！盛り上がるパーティーゲームの決定版
         </h3>
         <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '1.5rem' }}>
-          飲み会や合コン、パーティーで「次は何して遊ぼう？」と困ったことはありませんか？
+          ホームパーティーやイベントで「次は何して遊ぼう？」と困ったことはありませんか？
           のみげーむなら、人数やシチュエーションに合わせた最適なゲームが必ず見つかります。
           少人数でじっくり楽しめる心理戦から、大人数でワイワイ盛り上がるアクションゲームまで、
           独自のタグ検索で簡単に見つけることができます。
         </p>
 
         <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
-          みんなで作り上げる飲みゲームの輪
+          みんなで作り上げるパーティーゲームの輪
         </h3>
         <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '1.5rem' }}>
           「のみげーむ」は、みんなで作るプラットフォームです。<br />
           あなたの地元だけで流行っているローカルなゲームや、サークルで盛り上がったオリジナルの遊び方を、ぜひ投稿してください。<br />
-          あなたの投稿したゲームが、日本中の飲み会で遊ばれるようになるかもしれません。<br />
-          自分のお気に入りの「ノミゲー」を流行らせて、全国の飲み会をさらに熱くしましょう！
+          あなたの投稿したゲームが、日本中のイベントで遊ばれるようになるかもしれません。<br />
+          自分のお気に入りのゲームを流行らせて、全国の集まりをさらに楽しくしましょう！
         </p>
 
         <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
@@ -222,9 +222,8 @@ export default async function Home({ searchParams }: HomeProps) {
         </ul>
 
         <p style={{ fontSize: '0.9rem', color: '#888', marginTop: '2rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
-          ※当サイトは、楽しいお酒の場をサポートするための情報サイトです。
-          未成年の飲酒、一気飲みなどの危険な行為、強要行為は絶対に行わないでください。
-          ルールとマナーを守って、楽しく遊びましょう。
+          ※当サイトは、参加者全員が安全に楽しめる遊びの情報サイトです。
+          危険行為や強要行為は絶対に行わず、ルールとマナーを守って遊びましょう。
         </p>
       </section>
     </div >
