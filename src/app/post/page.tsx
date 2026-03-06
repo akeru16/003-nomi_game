@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import styles from './page.module.css';
 import { GAME_TAGS } from '@/data/games';
+import { hasContentPolicyViolation } from '@/lib/contentPolicy';
 
 export default function PostPage() {
     const { user, loading } = useAuth();
@@ -78,6 +79,17 @@ export default function PostPage() {
 
         if (!user) {
             alert("ログインが必要です");
+            return;
+        }
+
+        const textsToCheck = [
+            title,
+            description,
+            ...rules.filter(r => r.trim() !== ''),
+            ...materials.filter(m => m.trim() !== ''),
+        ];
+        if (hasContentPolicyViolation(textsToCheck)) {
+            alert("投稿内容に危険な飲酒を助長する表現が含まれています。内容を修正してください。");
             return;
         }
 

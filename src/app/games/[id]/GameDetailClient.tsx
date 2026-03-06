@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Game, incrementViews } from '@/lib/games';
 import GameStats from '@/app/components/GameStats';
 import ShareButtons from '@/app/components/ShareButtons';
-import AdSense from '@/app/components/AdSense';
 import { useAuth } from '@/context/AuthContext';
 import styles from './page.module.css';
 
@@ -75,9 +74,6 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                     <p className={styles.description}>{game.description}</p>
                 </section>
 
-                {/* Ad Placement 1: After Description */}
-                <AdSense adSlot="1234567890" adFormat="auto" />
-
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>必要なもの</h2>
                     <ul className={styles.materialList}>
@@ -101,9 +97,6 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                         </ol>
                     </div>
                 </section>
-
-                {/* Ad Placement 2: After Rules */}
-                <AdSense adSlot="0987654321" adFormat="auto" />
 
                 <div className={styles.tagsRow}>
                     {game.tags.map(tag => (

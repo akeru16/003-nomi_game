@@ -8,6 +8,7 @@ import { useAuth } from '../../../../context/AuthContext';
 import styles from '../../page.module.css';
 import { GAME_TAGS } from '@/data/games';
 import { getGameById, updateGame, deleteGame } from '@/lib/games';
+import { hasContentPolicyViolation } from '@/lib/contentPolicy';
 
 export default function EditGamePage() {
     const { user, loading } = useAuth();
@@ -116,6 +117,17 @@ export default function EditGamePage() {
 
         if (selectedTags.length === 0) {
             alert("タグを少なくとも1つ選択してください！");
+            return;
+        }
+
+        const textsToCheck = [
+            title,
+            description,
+            ...rules.filter(r => r.trim() !== ''),
+            ...materials.filter(m => m.trim() !== ''),
+        ];
+        if (hasContentPolicyViolation(textsToCheck)) {
+            alert("更新内容に危険な飲酒を助長する表現が含まれています。内容を修正してください。");
             return;
         }
 

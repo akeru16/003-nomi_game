@@ -7,12 +7,8 @@ export default function GoogleAdSense() {
     const pathname = usePathname();
 
     // Whitelist: AdSense strict mode
-    // Only allow ads on:
-    // 1. Home page (exact match "/")
-    // 2. Game Detail pages ("/games/[id]")
-    const isAllowed =
-        pathname === '/' ||
-        /^\/games\/\d+$/.test(pathname || '');
+    // Only allow ads on Home page for policy safety.
+    const isAllowed = pathname === '/';
 
     if (!isAllowed) {
         return null;
