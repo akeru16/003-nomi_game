@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Game, incrementViews } from '@/lib/games';
 import GameStats from '@/app/components/GameStats';
 import ShareButtons from '@/app/components/ShareButtons';
-import { useAuth } from '@/context/AuthContext';
+import { useFavorites } from '@/lib/localStore';
 import styles from './page.module.css';
 
 interface GameDetailClientProps {
@@ -13,31 +13,12 @@ interface GameDetailClientProps {
 }
 
 export default function GameDetailClient({ game }: GameDetailClientProps) {
-    const { user, isFavorite, addFavorite, removeFavorite } = useAuth();
-    const [favorited, setFavorited] = useState(false);
+    const { favorites, toggleFavorite } = useFavorites();
+    const favorited = favorites.includes(game.id);
 
     useEffect(() => {
-        // Increment view count
         incrementViews(game.id);
-
-        // Initialize favorite state on mount
-        setFavorited(isFavorite(game.id.toString()));
-    }, [isFavorite, game.id]);
-
-    const handleFavoriteToggle = () => {
-        if (!user) {
-            alert('お気に入りに追加するにはログインしてください');
-            return;
-        }
-
-        if (favorited) {
-            removeFavorite(game.id.toString());
-            setFavorited(false);
-        } else {
-            addFavorite(game.id.toString());
-            setFavorited(true);
-        }
-    };
+    }, [game.id]);
 
     return (
         <div className={styles.container}>
@@ -45,9 +26,10 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                 <div className={styles.titleRow}>
                     <h1 className={styles.title}>{game.title}</h1>
                     <button
-                        onClick={handleFavoriteToggle}
+                        onClick={() => toggleFavorite(game.id)}
                         className={`${styles.favoriteBtn} ${favorited ? styles.favorited : ''}`}
                         title={favorited ? 'お気に入りから削除' : 'お気に入りに追加'}
+                        aria-pressed={favorited}
                     >
                         {favorited ? '❤️' : '🤍'}
                     </button>

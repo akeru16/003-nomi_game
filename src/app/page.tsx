@@ -201,13 +201,12 @@ export default async function Home({ searchParams }: HomeProps) {
         </p>
 
         <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
-          みんなで作り上げる飲みゲームの輪
+          評価とお気に入りで、みんなの人気ゲームがわかる
         </h3>
         <p style={{ lineHeight: '1.8', color: '#555', marginBottom: '1.5rem' }}>
-          「のみげーむ」は、みんなで作るプラットフォームです。<br />
-          あなたの地元だけで流行っているローカルなゲームや、サークルで盛り上がったオリジナルの遊び方を、ぜひ投稿してください。<br />
-          あなたの投稿したゲームが、日本中の飲み会で遊ばれるようになるかもしれません。<br />
-          自分のお気に入りの「ノミゲー」を流行らせて、全国の飲み会をさらに熱くしましょう！
+          各ゲームには👍・👎で評価をつけられ、人気ランキングや急上昇ランキングに反映されます。<br />
+          気になったゲームは❤️でお気に入りに追加しておけば、次の飲み会ですぐに見返せます。<br />
+          登録やログインは不要。スマホひとつで、今すぐ遊べるゲームが見つかります。
         </p>
 
         <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem', borderLeft: '4px solid #FFD700', paddingLeft: '0.75rem' }}>
