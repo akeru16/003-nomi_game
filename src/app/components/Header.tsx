@@ -3,24 +3,12 @@
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '../../context/AuthContext';
 import styles from './Header.module.css';
 import SearchModal from './SearchModal';
 
 const Header = () => {
-  const { user } = useAuth();
-  const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
-
-  const handlePostClick = () => {
-    if (!user) {
-      router.push('/login');
-    } else {
-      router.push('/post');
-    }
-  };
 
   return (
     <header className={styles.header}>
@@ -81,25 +69,10 @@ const Header = () => {
             🔍
           </button>
 
-          {/* Post Button */}
-          <button className={styles.postBtn} onClick={handlePostClick}>
-            投稿する
-          </button>
-
-          {/* User Menu */}
-          {user ? (
-            <div className={styles.userMenu}>
-              <Link href="/profile" className={styles.profileLink} title="プロフィール">
-                <span className={styles.userIcon}>👤</span>
-                {/* Mobile: hide name, Desktop: show name will be handled in CSS if needed, or just show name */}
-                <span className={styles.userName}>{user.name}</span>
-              </Link>
-            </div>
-          ) : (
-            <Link href="/login" className={styles.loginBtn}>
-              ログイン
-            </Link>
-          )}
+          {/* Favorites */}
+          <Link href="/favorites" className={styles.favoritesBtn} aria-label="お気に入り">
+            ❤️<span className={styles.favoritesLabel}>お気に入り</span>
+          </Link>
         </nav>
       </div>
 

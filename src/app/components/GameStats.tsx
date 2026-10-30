@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { useRouter } from 'next/navigation';
-import { setUserAction, getUserAction } from '@/lib/games';
+import { applyVote } from '@/lib/games';
+import { getVote, saveVote, Vote } from '@/lib/localStore';
 import styles from './GameStats.module.css';
 
 interface GameStatsProps {
@@ -21,79 +20,46 @@ const formatNumber = (num: number) => {
 };
 
 const GameStats = ({ gameId, likes: initialLikes, dislikes: initialDislikes, views }: GameStatsProps) => {
-    const { user, anonymousId } = useAuth();
-    const router = useRouter();
-
     const [likes, setLikes] = useState(initialLikes);
     const [dislikes, setDislikes] = useState(initialDislikes);
-    const [userAction, setUserActionState] = useState<'like' | 'dislike' | null>(null);
+    const [userAction, setUserActionState] = useState<Vote | null>(null);
+    const [pending, setPending] = useState(false);
 
-    // Load initial user action
+    // Load this browser's previous vote
     useEffect(() => {
-        const loadAction = async () => {
-            const userId = user?.id || anonymousId;
-            if (userId && gameId) {
-                const action = await getUserAction(userId, gameId);
-                // @ts-ignore
-                if (action === 'like' || action === 'dislike') {
-                    // @ts-ignore
-                    setUserActionState(action);
-                }
-            }
-        };
-        loadAction();
-    }, [user, anonymousId, gameId]);
+        setUserActionState(getVote(gameId));
+    }, [gameId]);
 
-    const handleAction = async (type: 'like' | 'dislike') => {
-        const userId = user?.id || anonymousId;
+    const handleAction = async (type: Vote) => {
+        if (pending) return;
 
-        if (!userId) {
-            // Should not happen if anonymousId is working
-            return;
-        }
-
-        // Optimistic update logic
         const prevAction = userAction;
         const prevLikes = likes;
         const prevDislikes = dislikes;
+        const nextAction = userAction === type ? null : type;
 
-        if (userAction === type) {
-            // Toggle off
-            setUserActionState(null);
-            if (type === 'like') setLikes(prev => Math.max(0, prev - 1));
-            else setDislikes(prev => Math.max(0, prev - 1));
-        } else {
-            // Toggle on (and potentially switch)
-            if (userAction === 'like' && type === 'dislike') {
-                setLikes(prev => Math.max(0, prev - 1));
-                setDislikes(prev => prev + 1);
-            } else if (userAction === 'dislike' && type === 'like') {
-                setDislikes(prev => Math.max(0, prev - 1));
-                setLikes(prev => prev + 1);
-            } else {
-                // Fresh toggle
-                if (type === 'like') setLikes(prev => prev + 1);
-                else setDislikes(prev => prev + 1);
-            }
-            setUserActionState(type);
-        }
+        // Optimistic update
+        if (prevAction === 'like') setLikes(prev => Math.max(0, prev - 1));
+        if (prevAction === 'dislike') setDislikes(prev => Math.max(0, prev - 1));
+        if (nextAction === 'like') setLikes(prev => prev + 1);
+        if (nextAction === 'dislike') setDislikes(prev => prev + 1);
+        setUserActionState(nextAction);
+        saveVote(gameId, nextAction);
 
-        // Call API
+        setPending(true);
         try {
-            await setUserAction(userId, gameId, type);
-        } catch (error: any) {
+            await applyVote(gameId, prevAction, nextAction);
+        } catch (error) {
             console.error('Failed to update vote:', error);
 
             // Revert on error
             setUserActionState(prevAction);
+            saveVote(gameId, prevAction);
             setLikes(prevLikes);
             setDislikes(prevDislikes);
-
-            if (error.message === 'LIKE_LIMIT_REACHED') {
-                alert("いいねの上限(100件)に達しました。\n新しいゲームをいいねするには、他のゲームのいいねを解除してください。");
-            } else {
-                alert("エラーが発生しました。もう一度お試しください。");
-            }
+            alert("エラーが発生しました。もう一度お試しください。");
+        } finally {
+            setPending(false);
         }
     };
 

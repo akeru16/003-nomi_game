@@ -5,7 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://nomi-game.work'
 
     // Static pages
-    const routes = ['', '/login', '/register', '/post', '/random', '/profile', '/privacy', '/terms', '/contact', '/about'].map((route) => ({
+    const routes = ['', '/random', '/privacy', '/terms', '/contact', '/about'].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date().toISOString(),
         changeFrequency: 'daily' as const,
@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
     // Tool pages
-    const tools = ['/tools/dice', '/tools/cards', '/tools/kings'].map((route) => ({
+    const tools = ['/tools/dice', '/tools/cards', '/tools/kings', '/tools/metronome'].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date().toISOString(),
         changeFrequency: 'monthly' as const,

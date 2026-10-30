@@ -37,7 +37,7 @@ export default function HeroSection({ searchQuery }: HeroSectionProps) {
                         <span className={styles.heroTitleSub}>もっと楽しく。</span>
                     </h1>
                     <p className={styles.heroSubtitle}>
-                        「のみげーむ」は、みんなで盛り上がる飲み会ゲームの投稿・共有サイト。<br />
+                        「のみげーむ」は、みんなで盛り上がる飲み会ゲームのまとめサイト。<br />
                         あなたの知らない新しいゲームに出会えるかも？
                     </p>
                     <div className={styles.heroActions}>

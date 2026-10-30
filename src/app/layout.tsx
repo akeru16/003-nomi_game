@@ -8,7 +8,7 @@ import GoogleAdSense from "./components/GoogleAdSense";
 export const metadata: Metadata = {
   metadataBase: new URL('https://nomi-game.work'),
   title: "のみげーむ | 飲みゲーム・パーティーゲーム共有プラットフォーム",
-  description: "日本中の飲みゲーム、パーティーゲームが集まる掲示板。王様ゲーム、山手線ゲーム、たけのこニョッキなど、みんなで盛り上がれるゲームを探そう！新しいゲームも投稿できます。",
+  description: "日本中の飲みゲーム、パーティーゲームが集まる掲示板。王様ゲーム、山手線ゲーム、たけのこニョッキなど、みんなで盛り上がれるゲームを探そう！サイコロやトランプなどのWebツールも使えます。",
   keywords: ["飲みゲーム", "パーティーゲーム", "王様ゲーム", "山手線ゲーム", "たけのこニョッキ", "飲み会", "ゲーム", "掲示板"],
   authors: [{ name: "のみげーむ" }],
   creator: "のみげーむ",
@@ -65,8 +65,6 @@ const jsonLd = {
   }
 }
 
-import { AuthProvider } from "../context/AuthContext";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -84,13 +82,11 @@ export default function RootLayout({
         <GoogleAdSense />
       </head>
       <body>
-        <AuthProvider>
-          <Header />
-          <main style={{ minHeight: 'calc(100vh - 160px)', paddingBottom: '2rem' }}>
-            {children}
-          </main>
-          <Footer />
-        </AuthProvider>
+        <Header />
+        <main style={{ minHeight: 'calc(100vh - 160px)', paddingBottom: '2rem' }}>
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
